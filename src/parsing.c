@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:59:47 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 16:53:12 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 09:34:33 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	parse_mini_cmds(t_mini *mini)
 		}
 	}
 	mini->cmds[cmd_no] = NULL;
+	if (is_empty(mini->cmds[0]))
+		return (0);
 	return (1);
 }
 
@@ -57,11 +59,6 @@ int	check_input(t_mini *mini)
 	int	x;
 
 	x = 0;
-	if (!check_valid_quotes(mini->input))
-	{
-		ft_putendl_fd("Invalid Input", 2);
-		return (0);
-	}
 	while (mini->cmds[x])
 	{
 		if (is_sep(mini->cmds[x]) && !mini->cmds[x + 1][0])
@@ -101,8 +98,14 @@ int	ft_exit(char **cmds)
 
 int	ft_parse(t_mini *mini)
 {
+	if (!check_valid_quotes(mini->input))
+	{
+		ft_putendl_fd("Invalid Input", 2);
+		return (0);
+	}
 	mini->no_wrds = no_of_words(mini->input, 0, 0, 0) + 1;
 	mini->cmds = mini_split(mini->input);
+	display_split(mini->cmds, "\tmini_cmd");
 	if (!mini->cmds || mini->cmds == NULL)
 		return (0);
 	if (!check_input(mini))

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 20:20:09 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 14:37:00 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 09:52:42 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,16 @@ int	no_of_words(char *s, int trigger, int i, int no_wrds)
 				trigger = 1;
 			no_wrds++;
 		}
-		else if (s[i] == ' ' && trigger == 1)
+		else if (s[i] == ' ' && trigger == 1){
 			trigger = 0;
-		else if ((s[i] == '|' || s[i] == '/') && trigger == 1)
-		{
-			trigger = 0;
-			no_wrds++;
 		}
-		else if ((s[i] == 34 && trigger == 2) || (s[i] == 39 && trigger == 3))
+		if ((s[i] == '|' || s[i] == '/'))
+		{
+			if (trigger == 1)
+				no_wrds++;
+			trigger = 0;
+		}
+		if ((s[i] == 34 && trigger == 2) || (s[i] == 39 && trigger == 3))
 			trigger = 0;
 		i++;
 	}

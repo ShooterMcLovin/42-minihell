@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 17:45:56 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 09:29:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	init_minishell(char **env)
 	set_env(mini, env);
 	set_shlvl();
 	update_env_part(mini, "OLDPWD", "/");
-	init_signals(INTERACTIVE);
 	return (1);
 }
 
@@ -95,7 +94,7 @@ char	*get_prompt(char *prt)
 
 void	run_minishell(t_mini *mini)
 {
-	// print_token(mini);
+	print_token(mini);
 	// g_errno = 0;
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
@@ -115,6 +114,7 @@ int	main(int ac, char **av, char **env)
 	init_minishell(env);
 	while (1)
 	{
+		init_signals(INTERACTIVE);
 		mini->input = get_prompt(PROMPT);
 		if (!is_empty(mini->input))
 		{
