@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:59:47 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 09:34:33 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:15:19 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	ft_parse(t_mini *mini)
 	}
 	mini->no_wrds = no_of_words(mini->input, 0, 0, 0) + 1;
 	mini->cmds = mini_split(mini->input);
-	display_split(mini->cmds, "\tmini_cmd");
 	if (!mini->cmds || mini->cmds == NULL)
 		return (0);
 	if (!check_input(mini))

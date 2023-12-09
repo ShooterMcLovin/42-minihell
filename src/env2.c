@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:37:02 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/03 17:08:32 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:34:54 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	update_env_part(t_mini *mini, char *part, char *_new)
 	}
 	if (mini->env_test && mini->env_test->env_val != NULL)
 	{
-		// free(mini->env_test->env_val);
+		free(mini->env_test->env_val);
 		// ft_strlcpy(mini->env_test->env_val, _new, ft_strlen(_new) - 1);
 		mini->env_test->env_val = ft_strdup(_new);
 		mini->env_test = head;
@@ -108,7 +108,7 @@ char	**env_l_to_dbl_arr(t_environ *env)
 	if (env == NULL || env->env_var == NULL)
 		return (NULL);
 	no_of_env_items = env_size(env);
-	temp_env = malloc(sizeof(char *) * no_of_env_items + 1);
+	temp_env = malloc(sizeof(char *) * no_of_env_items);
 	if (!temp_env)
 		return (NULL);
 	while (head)

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:13:03 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 10:10:05 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 15:22:34 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	free_minishell(t_mini *mini)
 	free(mini->SHLVL);
 	free(mini->PATH);
 	free(mini);
+	if (mini->input)
+		free(mini->input);
 	return (err_no);
 }
 

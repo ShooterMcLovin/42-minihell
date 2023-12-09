@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 16:00:41 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 14:21:28 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	do_pipe(t_token *token)
 		dup2(token->p_fd[0], 0);
 		close(token->p_fd[0]);
 		exec_and_stuff(token->next);
-		// exit(0);
+		exit(0);
 	}
 }
 void	do_pipe2(t_token *token)
