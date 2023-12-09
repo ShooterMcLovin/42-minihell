@@ -6,67 +6,78 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:04:07 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/02 14:22:34 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/03 17:46:48 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_dollar	*ft_dol(void)
+char	*pre_dollar_sign(char *mini_cmd)
 {
-	t_dollar	*dol;
-	int			buff_size;
+	char	*str;
+	int		i;
 
-	buff_size = 100;
-	dol = malloc(sizeof(t_dollar));
-	if (!dol)
-		return (0);
-	dol->part = malloc(buff_size);
-	dol->start_of_cmd = malloc(buff_size);
-	dol->dollar = malloc(buff_size);
-	dol->cmd = malloc(buff_size);
-	return (dol);
+	i = 0;
+	if (has_dollar_sign(mini_cmd) == 0)
+		return (ft_strdup("\0"));
+	str = malloc(has_dollar_sign(mini_cmd));
+	if (!str)
+		return (NULL);
+	while (mini_cmd && mini_cmd[i] && mini_cmd[i] != '$')
+	{
+		str[i] = mini_cmd[i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
 }
 
-char	*dollar_sign(t_mini *mini, int cmd_no)
+char	*get_dollar_sign(char *mini_cmd)
 {
-	int			x;
-	int			i;
-	int			j;
-	t_dollar	*dol;
-	
-	i = 0;
-	j = 0;
-	dol = ft_dol();
-	x = has_dollar_sign(mini->cmds[cmd_no]);
-	if (mini->cmds[cmd_no][i] == 34 || mini->cmds[cmd_no][i] == 39)
-		i++;
-	if (mini->cmds[cmd_no][i + 1] == '?')
-	{
-		// ft_printf("<%s>\n", &(mini->cmds[cmd_no][i]));
-		return (ft_itoa(g_errno));
-	}
-	else
-	{
-		while (i < x && mini->cmds[cmd_no][i] != '$')
-			dol->start_of_cmd[j++] = mini->cmds[cmd_no][i++];
-		if (mini->cmds[cmd_no][++x])
-		{
-			dol->part = check_part((&mini->cmds[cmd_no][x]));
-			dol->dollar = ft_strdup(get_env_part(mini, dol->part));
-			if (!dol->dollar)
-				dol->dollar = ft_strdup("\0");
-		}
-		dol->cmd = ft_strjoin(dol->start_of_cmd, dol->dollar);
-		if (dol->dollar)
-			dol->cmd = ft_strjoin(dol->cmd, &mini->cmds[cmd_no][x + ft_strlen(dol->part)]);
-	// free(dol->cmd);
-	free(dol->part);
-	free(dol->start_of_cmd);
-	free(dol->dollar);
+	t_mini	*mini;
+	char	*str;
+	char	*dollar_sign;
+	int		i;
 
-	return (dol->cmd);
+	mini = get_data();
+	i = has_dollar_sign(mini_cmd) + 1;
+	str = check_part(&mini_cmd[i]);
+	dollar_sign = ft_strdup(get_env_part(mini, str));
+	return (dollar_sign);
+}
+
+int dollar_len(char *mini_cmd)
+{
+	int i = 0;
+	while(mini_cmd && mini_cmd[i] && mini_cmd[i] != '$')
+		i++;
+	while(mini_cmd && mini_cmd[i] && !isspace(mini_cmd[i])){
+
+		i++;
+		if (is_quote(mini_cmd[i]))
+			return i + 1;
 	}
+	return i + 1;
+}
+
+char	*dollar_sign(char *mini_cmd)
+{
+	char	*dollar_sign;
+	char	*pre_dollar;
+	char	*get_dollar;
+	int		len;
+
+	if (mini_cmd[1] && mini_cmd[1] == '?')
+		return (ft_itoa(g_errno));
+	pre_dollar = pre_dollar_sign(mini_cmd);
+	get_dollar = get_dollar_sign(mini_cmd);
+	dollar_sign = ft_strjoin(pre_dollar, get_dollar);
+	len = dollar_len(mini_cmd);
+	if (dollar_sign[0] && mini_cmd[len])
+		dollar_sign = ft_strjoin(dollar_sign, &mini_cmd[len - 1]);
+	free(pre_dollar);
+	free(get_dollar);
+	return (dollar_sign);
 }
 
 int	has_dollar_sign(char *input)

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 11:36:05 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/03 17:45:35 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,6 @@ typedef struct s_mini
 	int					pid;
 }						t_mini;
 
-typedef struct s_dollar
-{
-	char				*part;
-	char				*start_of_cmd;
-	char				*dollar;
-	char				*cmd;
-}						t_dollar;
-
 typedef struct s_environ
 {
 	char				**temp;
@@ -129,7 +121,7 @@ int						is_builtin(t_token *token);
 int						ft_parse(t_mini *mini);
 int						parse_mini_cmds(t_mini *mini);
 int						is_empty(char *input);
-int	has_equal_sign(char **var);
+int						has_equal_sign(char **var);
 int						tokeniser(t_mini *mini);
 char					**env_l_to_dbl_arr(t_environ *env);
 char					*check_part(char *part);
@@ -137,7 +129,7 @@ int						check_pipe(t_mini *mini, int cmd_no);
 int						check_valid_quotes(char *input);
 void					set_err_code(int code);
 int						has_dollar_sign(char *input);
-char					*dollar_sign(t_mini *mini, int cmd_no);
+char					*dollar_sign(char *mini_cmd);
 int						has_quotes(char *str);
 
 /*Env*/
@@ -210,7 +202,6 @@ void					free_tokens(t_token *tokens);
 void					free_env(t_environ *env);
 int					free_minishell(t_mini *mini);
 void					reset_minishell(t_mini *mini);
-void					free_dollar(t_dollar *dol);
 t_mini					*get_data(void);
 void					free_export(t_export *exp);
 

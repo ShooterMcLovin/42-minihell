@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 11:13:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/03 17:45:56 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	set_shlvl(void)
 	new_SHLVL = (ft_itoa(sh_lvl));
 	update_env_part(mini, shlvl, new_SHLVL);
 	free(new_SHLVL);
-	// ft_printf("<%s>\n", sh_lvl);
 	free(shlvl);
 	return (1);
 }
@@ -114,7 +113,6 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	mini = get_data();
 	init_minishell(env);
-	
 	while (1)
 	{
 		mini->input = get_prompt(PROMPT);
@@ -128,6 +126,7 @@ int	main(int ac, char **av, char **env)
 			}
 			else if (parsing > 0)
 				run_minishell(mini);
+			free(mini->input);
 		}
 	}
 	return (mini->errno);
