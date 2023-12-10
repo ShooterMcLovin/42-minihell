@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 17:45:35 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:32:12 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@
 //Modes 11-12
 # define INTERACTIVE 11
 # define CHILD 12
-//FDs 20+
-# define STDIN 20
-# define STDOUT 21
-# define STDERR 22
+
 
 typedef struct s_token
 {
@@ -204,6 +201,7 @@ int					free_minishell(t_mini *mini);
 void					reset_minishell(t_mini *mini);
 t_mini					*get_data(void);
 void					free_export(t_export *exp);
+void free_child(t_mini *mini);
 
 /*TO DO
 

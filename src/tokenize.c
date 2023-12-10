@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 18:54:24 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 11:40:49 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 
 	wrd_no = 0;
 	tokens = malloc(sizeof(t_token));
-	tokens->cmd = malloc(sizeof(char *) * 100);
+	tokens->cmd = malloc(sizeof(char *) * 5);
 	if (mini->cmds[cmd_index] && is_sep(mini->cmds[cmd_index]))
 	{
 		tokens->cmd[wrd_no] = ft_strdup(mini->cmds[cmd_index]);
@@ -98,6 +98,7 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 	tokens->pid = -1;
 	tokens->token_no = x;
 	tokens->env = mini->env_test;
+	tokens->fd_out = 0;
 	tokens->mini = mini;
 	tokens->next = NULL;
 	tokens->errnum = get_errno(tokens);

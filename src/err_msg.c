@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 09:18:36 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 10:33:49 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 10:44:07 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	invalid_path(char *error)
 {
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(error, 2);
-	ft_putendl_fd(" : invalid path", 2);
+	ft_putendl_fd(" : No such file or directory", 2);
 	return (0);
 }
 
