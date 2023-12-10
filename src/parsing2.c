@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:04:07 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 10:36:35 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:54:52 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*dollar_sign(char *mini_cmd)
 		return (ft_itoa(g_errno));
 	if (!mini_cmd[1])
 		return mini_cmd;
+	
 	pre_dollar = pre_dollar_sign(mini_cmd);
 	get_dollar = get_dollar_sign(mini_cmd);
 	dollar_sign = ft_strjoin(pre_dollar, get_dollar);
@@ -92,7 +93,13 @@ int	has_dollar_sign(char *input)
 	while (input[i])
 	{
 		if (input[i] == '$')
+		{
+			while (input [i+1] && input[i + 1] == '$')
+				i++;
+			if (!input[i + 1] )
+				return 0;
 			return (i);
+		}
 		i++;
 	}
 	return (0);

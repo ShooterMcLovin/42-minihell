@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 06:14:32 by alpicard          #+#    #+#             */
-/*   Updated: 2023/11/26 17:49:33 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:38:48 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_int_handler(int sig)
 void	ft_quit_handler2(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("^\\Quit\n",1);
+	// printf("^\\Quit\n");
 	kill(0,0);
  
 }
