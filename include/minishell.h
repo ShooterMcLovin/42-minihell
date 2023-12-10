@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:21:48 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:22:24 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ char					**mini_split(char *s);
 char					**ft_split2(char const *s, char *c);
 
 /*Execute*/
+t_mini					*get_data(void);
 void					exec_and_stuff(t_token *token);
 char					*get_path(t_token *token);
 void					absolute_path(t_token *token);
@@ -191,13 +192,13 @@ int						invalid_path(char *error);
 int						command_not_found(char *error);
 int						is_a_directory(char *error);
 void					set_err_code(int code);
+
 /*Free*/
 void					*releaser(char **table);
 void					free_tokens(t_token *tokens);
 void					free_env(t_environ *env);
 int						free_minishell(t_mini *mini);
 void					reset_minishell(t_mini *mini);
-t_mini					*get_data(void);
 void					free_export(t_export *exp);
 void					free_child(t_mini *mini);
 
