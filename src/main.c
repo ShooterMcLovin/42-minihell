@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 10:45:07 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:59:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	main(int ac, char **av, char **env)
 			if (parsing == -1)
 			{
 				ft_putendl_fd("exit", 2);
+				free(mini->input);
 				return (free_minishell(mini));
 			}
 			else if (parsing > 0)

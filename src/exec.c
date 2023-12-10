@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 12:56:29 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:01:32 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	exec_and_stuff(t_token *token)
 			else if (!ft_strncmp(head->cmd[0], "echo", 5))
 			{
 				ft_echo(head);
-				exit(0);
+				// exit(0);
 			}
 			else
 				exec(head);
