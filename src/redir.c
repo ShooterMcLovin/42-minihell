@@ -6,11 +6,12 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 13:30:02 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:21:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <unistd.h>
 
 void	redir(t_token *token)
 {
@@ -70,9 +71,10 @@ char	**build_heredoc_cmd2(t_token *token)
 	cmd[0] = (token->cmd[0]);
 	if (!ft_strncmp(cmd[0], "ls", 3))
 	 	cmd[1] = NULL;
-	else
+	else{
 		cmd[1] = (".temp");
-	cmd[2] = NULL;
+		cmd[2] = NULL;
+	}
 	return (cmd);
 }
 
@@ -106,10 +108,14 @@ int	heredoc(t_token *token)
 		env = env_l_to_dbl_arr(token->env);
 		path = get_path(token);
 		if ((execve(path, here_doc_cmd, env) < 0))
+		{
+			free(here_doc_cmd);
 			command_not_found(token->cmd[0]);
-		releaser(here_doc_cmd);
-		free(path);
-		releaser(env);
+			close(token->fd_hd);
+			path = NULL;
+			releaser(env);
+			// reset_minishell(token->mini);
+		}
 	}
 	return 1;
 }
