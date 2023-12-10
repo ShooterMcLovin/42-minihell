@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:17:36 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 10:00:11 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:06:52 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**build_cmd(t_token *token)
 		cmd_no++;
 	s_cmd = malloc(sizeof(char *) * 3);
 	if (!s_cmd)
-		return(NULL);
+		return (NULL);
 	s_cmd[0] = temp[cmd_no - 1];
 	if (token->cmd[1])
 		s_cmd[1] = token->cmd[1];

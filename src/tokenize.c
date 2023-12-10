@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 12:40:18 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:20:43 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ int	get_types(t_mini *mini)
 				if (!ft_strncmp(mini->tokens->next_sep, "|", 2))
 					mini->tokens->type = PIPE;
 				else if (!ft_strncmp(mini->tokens->next_sep, "<<", 3))
-					mini->tokens->type = REDIR_dbl2;
+					mini->tokens->type = REDIR_DBL2;
 				else if (!ft_strncmp(mini->tokens->next_sep, ">>", 3))
-					mini->tokens->type = REDIR_dbl;
+					mini->tokens->type = REDIR_DBL;
 				else if (!ft_strncmp(mini->tokens->next_sep, ">", 2))
 				{
 					mini->tokens->type = REDIR_IN;

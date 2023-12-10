@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:01:37 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:00:09 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:12:44 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_export	*ft_exp(t_mini *mini, char *var)
 	(void)mini;
 	export = malloc(sizeof(t_export));
 	if (!export)
-		return(NULL);
+		return (NULL);
 	export->temp = ft_split(var, '=');
 	export->env_var = ft_strdup(export->temp[0]);
 	export->env_val = ft_strdup(&var[ft_strlen(export->env_var) + 1]);
@@ -57,9 +57,6 @@ t_export	*init_export(t_mini *mini, char **var)
 	int			x;
 
 	x = 0;
-	// export = malloc(sizeof(t_export));
-	// if (!export)
-	// 	return (NULL);
 	export = ft_exp(mini, var[x]);
 	export_head = export;
 	while (var[++x])

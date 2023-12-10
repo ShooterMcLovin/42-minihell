@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:01:32 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:19:56 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	exec(t_token *token)
 		free(path);
 		exit(0);
 	}
-		// exit(0);
 	return (0);
 }
 
@@ -76,6 +75,30 @@ void	wait_pids(t_token *token)
 		waitpid(head->pid, NULL, 0);
 		head = head->next;
 	}
+}
+
+void	do_child_stuff(t_token *token)
+{
+	if (token->type == ABS)
+		absolute_path(token);
+	else if (token->type == REDIR_IN)
+		redir(token);
+	else if (token->type == REDIR_OUT)
+		redir2(token);
+	else if (token->type == REDIR_DBL2)
+		heredoc(token);
+	else if (token->type == REDIR_DBL)
+		redir_append(token);
+	else if (token->type == -3)
+		do_pipe3(token);
+	else if (token->type == PIPE || ft_strncmp(token->next_sep, "|", 1))
+		do_pipe(token);
+	else if (!ft_strncmp(token->cmd[0], "echo", 5))
+		ft_echo(token);
+	else
+		exec(token);
+	free_child(token->mini);
+	exit(0);
 }
 
 void	exec_and_stuff(t_token *token)
@@ -92,37 +115,12 @@ void	exec_and_stuff(t_token *token)
 	{
 		pid = fork();
 		if (!pid)
-		{
-			if (head->type == ABS)
-				absolute_path(head);
-			else if (head->type == REDIR_IN)
-				redir(head);
-			else if (head->type == REDIR_OUT)
-				redir2(head);
-			else if (head->type == REDIR_dbl2)
-				heredoc(head);
-			else if (head->type == REDIR_dbl)
-				redir_append(head);
-			else if (head->type == -3)
-				do_pipe3(head);
-			else if (head->type == PIPE || ft_strncmp(head->next_sep, "|", 1))
-				do_pipe(head);
-			else if (!ft_strncmp(head->cmd[0], "echo", 5))
-			{
-				ft_echo(head);
-				// exit(0);
-			}
-			else
-				exec(head);
-			free_child(token->mini);
-			exit(0);
-		}
+			do_child_stuff(head);
 		else
 		{
 			head = mini->tokens;
 			wait_pids(head);
 			waitpid(pid, NULL, 0);
-			
 		}
 	}
 }

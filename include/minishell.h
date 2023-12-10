@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 12:40:27 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:19:39 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include "../Readline/history.h"
 # include "../Readline/readline.h"
 # include "../libft/include/libft.h"
+# include <fcntl.h>
 # include <pthread.h>
 # include <signal.h>
 # include <stdint.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 # define PROMPT "Minishell-0.9$ "
 # define HEREDOC "heredoc > "
@@ -32,15 +32,14 @@
 # define PIPE 3        // |
 # define REDIR_IN 4    // >
 # define REDIR_OUT 5   // <
-# define REDIR_dbl 9   // >>
-# define REDIR_dbl2 10 // <<
+# define REDIR_DBL 9   // >>
+# define REDIR_DBL2 10 // <<
 # define ABS 6
 # define FILE_OUT 7
 
 //Modes 11-12
 # define INTERACTIVE 11
 # define CHILD 12
-
 
 typedef struct s_token
 {
@@ -51,16 +50,16 @@ typedef struct s_token
 	int					errno;
 	int					errnum;
 	pid_t				child_pid;
-	pid_t pid; // test al
+	pid_t				pid;
 	int					p_fd[2];
 
-	int input;             // STDIN or pipe
-	int output;            // STDOUT or pipe
-	int fd_in;             // REDIR
-	int fd_out;            //  REDIR
-	int fd_hd;            //  HEREDOC
-	struct s_environ *env; // address of env
-	struct s_mini *mini;   // address of mini
+	int					input;
+	int					output;
+	int					fd_in;
+	int					fd_out;
+	int					fd_hd;
+	struct s_environ	*env;
+	struct s_mini		*mini;
 	struct s_token		*next;
 }						t_token;
 
@@ -71,10 +70,9 @@ typedef struct s_mini
 	int					no_sep;
 	int					no_wrds;
 	char				**env;
-	char				*SHLVL;
-	char				*PATH;
+	char				*shlvl;
+	char				*path;
 	int					env_len;
-	// struct s_env	*env_l;
 	struct s_environ	*env_test;
 	int					errno;
 	struct s_token		*tokens;
@@ -84,8 +82,8 @@ typedef struct s_mini
 typedef struct s_environ
 {
 	char				**temp;
-	char *env_var; // gauche du =
-	char *env_val; // droite du =
+	char				*env_var;
+	char				*env_val;
 	int					num;
 	struct s_environ	*next;
 }						t_environ;
@@ -130,8 +128,8 @@ char					*dollar_sign(char *mini_cmd);
 int						has_quotes(char *str);
 
 /*Env*/
-t_environ	*new_env(char **var);
-t_environ	*new_env2(char *var);
+t_environ				*new_env(char **var);
+t_environ				*new_env2(char *var);
 int						ft_set_env(t_mini *mini, char **env);
 t_environ				*new_env_list(char *content);
 void					ft_envadd_back(t_environ **env, t_environ *neo);
@@ -139,10 +137,10 @@ t_environ				*ft_envlast(t_environ *env);
 t_environ				*init_env_list(t_mini *mini, int env_item);
 void					print_env(t_environ *environ);
 t_environ				*init_item(char *to_split);
-void	do_export(t_mini *mini, t_export *_export, char **var);
-int	export_no_input(t_mini *mini);
-int	check_export(char **var);
-t_export	*init_export(t_mini *mini, char **var);
+void					do_export(t_mini *mini, t_export *_export, char **var);
+int						export_no_input(t_mini *mini);
+int						check_export(char **var);
+t_export				*init_export(t_mini *mini, char **var);
 
 /*Mini_split*/
 int						no_of_words(char *s, int trigger, int i, int no_wrds);
@@ -152,28 +150,28 @@ char					**ft_split2(char const *s, char *c);
 
 /*Execute*/
 void					exec_and_stuff(t_token *token);
-char	*get_path(t_token *token);
-void	absolute_path(t_token *token);
+char					*get_path(t_token *token);
+void					absolute_path(t_token *token);
 int						exec(t_token *token);
 void					wait_pids(t_token *token);
-int					heredoc(t_token *token);
+int						heredoc(t_token *token);
 void					do_pipe3(t_token *token);
 void					do_pipe2(t_token *token);
 void					do_pipe(t_token *token);
 void					redir(t_token *token);
 void					redir2(t_token *token);
 void					redir_append(t_token *token);
-char	**build_heredoc_cmd2(t_token *token);
+char					**build_heredoc_cmd2(t_token *token);
 
 /*Utils*/
-char	*get_prompt(char *prt);
+char					*get_prompt(char *prt);
 int						ft_len(char *s);
 int						is_sep(char *str);
 int						no_of_quotes(int max, char *s);
 int						no_of_squotes(int max, char *s);
 char					*ft_str_to_upper(char *s);
 int						is_quoted(char *str);
-int is_quote(int c);
+int						is_quote(int c);
 
 /*Display test*/
 void					print_array(t_mini *mini);
@@ -188,7 +186,7 @@ void					ft_handler(int sig);
 void					handler(int sig, siginfo_t *info, void *s);
 
 /*Errors*/
-int syntax_error(void);
+int						syntax_error(void);
 int						invalid_path(char *error);
 int						command_not_found(char *error);
 int						is_a_directory(char *error);
@@ -197,17 +195,10 @@ void					set_err_code(int code);
 void					*releaser(char **table);
 void					free_tokens(t_token *tokens);
 void					free_env(t_environ *env);
-int					free_minishell(t_mini *mini);
+int						free_minishell(t_mini *mini);
 void					reset_minishell(t_mini *mini);
 t_mini					*get_data(void);
 void					free_export(t_export *exp);
-void free_child(t_mini *mini);
+void					free_child(t_mini *mini);
 
-/*TO DO
-
-testing ++
-Valgrind
-Norminette
-
-*/
 #endif

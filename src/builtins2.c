@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:22:48 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/09 10:25:04 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:08:23 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,26 @@ int	ft_export(t_mini *mini, char **var)
 	do_export(mini, export, var);
 	free_export(export);
 	return (0);
+}
+
+int	is_builtin(t_token *token)
+{
+	if (!ft_strncmp(token->cmd[0], "pwd", 3))
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "PWD", 3))
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "cd", 2))
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "unset", 5))
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "export", 6) && !token->cmd[1])
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "export", 6))
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "env", 3))
+		return (1);
+	else if (!ft_strncmp(token->cmd[0], "echo", 5))
+		return (1);
+	else
+		return (0);
 }

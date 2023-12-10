@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:09:45 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 15:37:14 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:08:39 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,3 @@ void	set_env(t_mini *mini, char **env)
 	}
 	mini->env_test = head;
 }
-

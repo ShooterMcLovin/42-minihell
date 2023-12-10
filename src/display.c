@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:54:27 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 09:34:23 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:14:20 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	print_token(t_mini *mini)
 	t_token	*head;
 
 	head = mini->tokens;
-
 	ft_printf("\n\t:TOKENS:\n_____________________\n");
 	while (head != NULL)
 	{

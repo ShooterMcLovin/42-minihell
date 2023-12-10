@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 11:15:25 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:07:59 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,29 +86,6 @@ int	ft_unset(t_token *token)
 	token->mini->env_test = head;
 	token->mini->env_len--;
 	return (0);
-}
-
-int is_builtin(t_token *token)
-{
-	if (!ft_strncmp(token->cmd[0], "pwd", 3))
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "PWD", 3))
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "cd", 2))
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "unset", 5))
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "export", 6) && !token->cmd[1])
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "export", 6))
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "env", 3))
-		return 1;
-	else if (!ft_strncmp(token->cmd[0], "echo", 5))
-		return 1;
-	else
-		return (0);
-	
 }
 
 int	ft_builtins(t_token *token)

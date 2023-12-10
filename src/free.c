@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:13:03 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 16:59:10 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:20:08 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ void	free_tokens(t_token *tokens)
 		free(tokens->next_sep);
 		if (tokens->fd_out)
 			close(tokens->fd_out);
-		// free_env(tokens->env);
 		free(tokens);
 		tokens = temp;
 	}
-	// free(tokens);
 }
 
 void	free_env(t_environ *env)
@@ -39,7 +37,6 @@ void	free_env(t_environ *env)
 		temp = env->next;
 		free(env->env_var);
 		free(env->env_val);
-		// releaser(env->temp);
 		free(env);
 		env = temp;
 	}
@@ -71,28 +68,15 @@ int	free_minishell(t_mini *mini)
 	mini->env = NULL;
 	if (mini->tokens)
 		free_tokens(mini->tokens);
-	free(mini->SHLVL);
-	// free(mini->PATH);
+	free(mini->shlvl);
 	free(mini);
-	
 	return (err_no);
 }
 
-void free_child(t_mini *mini)
+void	free_child(t_mini *mini)
 {
 	if (mini->tokens)
 		free_tokens(mini->tokens);
 	free_env(mini->env_test);
 	free(mini);
-	
-}
-
-void	reset_minishell(t_mini *mini)
-{
-	if (mini->tokens)
-		free_tokens(mini->tokens);
-	// free_env(mini->env_test);
-	// free(mini);
-	// mini = get_data();
-	// set_env(mini, env);
 }

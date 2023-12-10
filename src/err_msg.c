@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 09:18:36 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 10:44:07 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:09:08 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	set_err_code(int code)
 	g_errno = code;
 }
 
-int syntax_error(void)
+int	syntax_error(void)
 {
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putendl_fd("syntax error", 2);

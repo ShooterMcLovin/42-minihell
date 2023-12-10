@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:37:02 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/10 15:15:12 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:09:02 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	update_env_part(t_mini *mini, char *part, char *_new)
 	if (mini->env_test && mini->env_test->env_val != NULL)
 	{
 		free(mini->env_test->env_val);
-		// ft_strlcpy(mini->env_test->env_val, _new, ft_strlen(_new) - 1);
 		mini->env_test->env_val = ft_strdup(_new);
 		mini->env_test = head;
 		return (1);
@@ -102,7 +101,7 @@ char	**env_l_to_dbl_arr(t_environ *env)
 	int			no_of_env_items;
 	int			env_item_no;
 	char		**temp_env;
-	char *temp;
+	char		*temp;
 
 	env_item_no = 0;
 	head = env;
@@ -115,7 +114,7 @@ char	**env_l_to_dbl_arr(t_environ *env)
 	while (head->next)
 	{
 		temp = ft_strjoin(head->env_var, "=");
-		temp_env[env_item_no] = ft_strjoin(temp,head->env_val);
+		temp_env[env_item_no] = ft_strjoin(temp, head->env_val);
 		env_item_no++;
 		temp = ft_free(temp);
 		head = head->next;
