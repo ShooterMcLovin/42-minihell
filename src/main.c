@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:13:55 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:29:28 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ int	main(int ac, char **av, char **env)
 {
 	static t_mini	*mini;
 	int				parsing;
-	pid_t			pid;
-	pid = getpid();
-	ft_printf("PID: %d\n", pid);
+	// pid_t			pid;
+	// pid = getpid();
+	// ft_printf("PID: %d\n", pid);
 	(void)av;
 	if (ac > 1)
 		return (0);
