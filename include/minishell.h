@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:19:39 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:21:48 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ int						has_quotes(char *str);
 /*Env*/
 t_environ				*new_env(char **var);
 t_environ				*new_env2(char *var);
-int						ft_set_env(t_mini *mini, char **env);
 t_environ				*new_env_list(char *content);
-void					ft_envadd_back(t_environ **env, t_environ *neo);
 t_environ				*ft_envlast(t_environ *env);
 t_environ				*init_env_list(t_mini *mini, int env_item);
-void					print_env(t_environ *environ);
 t_environ				*init_item(char *to_split);
+void					ft_envadd_back(t_environ **env, t_environ *neo);
+void					print_env(t_environ *environ);
 void					do_export(t_mini *mini, t_export *_export, char **var);
+int						ft_set_env(t_mini *mini, char **env);
 int						export_no_input(t_mini *mini);
 int						check_export(char **var);
 t_export				*init_export(t_mini *mini, char **var);
