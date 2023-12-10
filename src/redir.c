@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 13:05:45 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:27:26 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	redir(t_token *token)
 	}
 	if (temp->fd_out < 0)
 		return ;
-	exec_and_stuff(temp);
+	exec(temp);
+	close(temp->fd_out);
+	free_child(token->mini);
 	// if (token->next->type > 0)
 	// else
 	// exec_and_stuff(token->next);
