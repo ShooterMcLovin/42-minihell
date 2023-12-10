@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 15:35:35 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:54:24 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	check_cmd(t_token *token)
 	g_errno = 127;
 	return (127);
 }
+
 int check_file_exists(t_token *token)
 {
 	if (token->cmd && token->cmd[1] && !is_builtin(token))
@@ -55,6 +56,7 @@ int check_file_exists(t_token *token)
 	}
 	return g_errno;
 }
+
 int get_errno(t_token *token)
 {
 	if (check_cmd(token))
@@ -64,13 +66,14 @@ int get_errno(t_token *token)
 		g_errno = 1;
 	return g_errno; 
 }
+
 t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 {
 	t_token	*tokens;
 	int		wrd_no;
 
 	wrd_no = 0;
-	tokens = malloc(sizeof(t_token) * 100);
+	tokens = malloc(sizeof(t_token));
 	tokens->cmd = malloc(sizeof(char *) * 100);
 	if (mini->cmds[cmd_index] && is_sep(mini->cmds[cmd_index]))
 	{

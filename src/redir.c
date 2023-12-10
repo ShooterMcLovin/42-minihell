@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 11:59:56 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 15:44:41 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	heredoc(t_token *token)
 	char	*heredoc_input;
 	char	**here_doc_cmd;
 	char	*path;
+	char **env;
 
 	heredoc_input = NULL;
 	if (!token->next->cmd[0])
@@ -98,11 +99,11 @@ int	heredoc(t_token *token)
 			ft_putendl_fd(heredoc_input, token->fd_hd);
 	}
 	here_doc_cmd = build_heredoc_cmd2(token);
+	env = env_l_to_dbl_arr(token->env);
 	path = get_path(token);
 	if (token->next && token->next->type == PIPE)
 		do_pipe3(token);
-	else if (execve(path, here_doc_cmd,
-			env_l_to_dbl_arr(token->env)) < 0)
+	else if (execve(path, here_doc_cmd, env) < 0)
 		command_not_found(token->cmd[0]);
 	return 1;
 }

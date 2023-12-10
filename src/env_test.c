@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:09:45 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 13:57:56 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:20:07 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,13 @@ void	set_env(t_mini *mini, char **env)
 
 	x = 0;
 	mini->env_test = init_item(env[x]);
+	releaser(mini->env_test->temp);
 	mini->env_test->num = x;
 	head = mini->env_test;
 	while (env[++x])
 	{
 		mini->env_test->next = init_item(env[x]);
+		releaser(mini->env_test->next->temp);
 		mini->env_test->next->num = x;
 		mini->env_test = mini->env_test->next;
 	}

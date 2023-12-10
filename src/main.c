@@ -6,11 +6,12 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 14:14:21 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 19:05:56 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <unistd.h>
 
 int	set_shlvl(void)
 {
@@ -26,12 +27,11 @@ int	set_shlvl(void)
 	if (cur_shlvl == NULL)
 		return (0);
 	sh_lvl = ft_atoi(cur_shlvl);
-	free(cur_shlvl);
 	sh_lvl++;
 	new_SHLVL = (ft_itoa(sh_lvl));
 	update_env_part(mini, shlvl, new_SHLVL);
-	free(new_SHLVL);
-	free(shlvl);
+	new_SHLVL = ft_free(new_SHLVL);
+	shlvl = ft_free(shlvl);
 	return (1);
 }
 
@@ -107,7 +107,9 @@ int	main(int ac, char **av, char **env)
 {
 	static t_mini	*mini;
 	int				parsing;
-
+	pid_t			pid;
+	pid = getpid();
+	ft_printf("PID: %d\n", pid);
 	(void)av;
 	if (ac > 1)
 		return (0);
@@ -127,7 +129,7 @@ int	main(int ac, char **av, char **env)
 			}
 			else if (parsing > 0)
 				run_minishell(mini);
-			free(mini->input);
+			// reset_minishell(mini);
 		}
 	}
 	return (mini->errno);

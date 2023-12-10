@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:37:02 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/09 14:34:54 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:50:03 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	**env_l_to_dbl_arr(t_environ *env)
 	if (env == NULL || env->env_var == NULL)
 		return (NULL);
 	no_of_env_items = env_size(env);
-	temp_env = malloc(sizeof(char *) * no_of_env_items);
+	temp_env = malloc(sizeof(char *) * no_of_env_items + 1);
 	if (!temp_env)
 		return (NULL);
 	while (head)

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 14:21:28 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/09 19:00:44 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	do_pipe(t_token *token)
 		dup2(token->p_fd[1], 1);
 		close(token->p_fd[1]);
 		exec(token);
+		free_minishell(token->mini);
 		exit(0);
 	}
 	else
@@ -37,6 +38,10 @@ void	do_pipe(t_token *token)
 		dup2(token->p_fd[0], 0);
 		close(token->p_fd[0]);
 		exec_and_stuff(token->next);
+		// free_env(token->mini->env_test);
+		// free_tokens(token->mini->tokens);
+		free_env(token->mini->env_test);
+		reset_minishell(token->mini);
 		exit(0);
 	}
 }
@@ -67,6 +72,7 @@ void	do_pipe2(t_token *token)
 		close(p_fd[0]);
 		if (token->next->next->cmd)
 			exec(token->next->next);
+		reset_minishell(token->mini);
 		// exec(token);
 	}
 }
@@ -102,10 +108,13 @@ void	do_pipe3(t_token *token)
 		close(p_fd[1]);
 		dup2(p_fd[0], 0);
 		close(p_fd[0]);
+		close(token->fd_hd);
 		if (token->next->next)
 			exec_and_stuff(token->next->next);
 		// exec(token->next->next);
 		waitpid(token->pid, 0, 0);
+		// free_minishell(token->mini);
+		exit(0);
 		// exec(token);
 	}
 }
