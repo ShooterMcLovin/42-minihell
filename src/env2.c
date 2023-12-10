@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:37:02 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/10 11:50:35 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:58:58 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,22 @@ char	**env_l_to_dbl_arr(t_environ *env)
 	int			no_of_env_items;
 	int			env_item_no;
 	char		**temp_env;
+	char *temp;
 
 	env_item_no = 0;
 	head = env;
 	if (env == NULL || env->env_var == NULL)
 		return (NULL);
 	no_of_env_items = env_size(env);
-	temp_env = malloc(sizeof(char *) * no_of_env_items + 1);
+	temp_env = malloc(sizeof(char *) * no_of_env_items);
 	if (!temp_env)
 		return (NULL);
 	while (head->next)
 	{
-		temp_env[env_item_no] = ft_strjoin(head->env_var, "=");
-		temp_env[env_item_no] = ft_strjoin(temp_env[env_item_no],
-				head->env_val);
+		temp = ft_strjoin(head->env_var, "=");
+		temp_env[env_item_no] = ft_strjoin(temp,head->env_val);
 		env_item_no++;
+		temp = ft_free(temp);
 		head = head->next;
 	}
 	temp_env[env_item_no] = NULL;

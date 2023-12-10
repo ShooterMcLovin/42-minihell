@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 11:33:04 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:05:45 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ char	**build_heredoc_cmd2(t_token *token)
 	char	**cmd;
 
 	cmd = malloc(sizeof(char *) * 3);
-	cmd[0] = ft_strdup(token->cmd[0]);
-	if (!ft_strncmp(token->cmd[0], "ls", 3))
+	cmd[0] = (token->cmd[0]);
+	if (!ft_strncmp(cmd[0], "ls", 3))
 	 	cmd[1] = NULL;
 	else
-		cmd[1] = ft_strdup(".temp");
+		cmd[1] = (".temp");
 	cmd[2] = NULL;
 	return (cmd);
 }
@@ -97,16 +97,20 @@ int	heredoc(t_token *token)
 		if (ft_strncmp(heredoc_input, delimiter, ft_strlen(delimiter) + 1 ))
 			ft_putendl_fd(heredoc_input, token->fd_hd);
 	}
-	here_doc_cmd = build_heredoc_cmd2(token);
 	free(delimiter);
-	env = env_l_to_dbl_arr(token->env);
-	path = get_path(token);
 	if (token->next && token->next->type == PIPE)
 		do_pipe3(token);
-	else if (execve(path, here_doc_cmd, env) < 0)
-		command_not_found(token->cmd[0]);
-	releaser(here_doc_cmd);
-	releaser(env);
+	else
+	{
+		here_doc_cmd = build_heredoc_cmd2(token);
+		env = env_l_to_dbl_arr(token->env);
+		path = get_path(token);
+		if ((execve(path, here_doc_cmd, env) < 0))
+			command_not_found(token->cmd[0]);
+		releaser(here_doc_cmd);
+		free(path);
+		releaser(env);
+	}
 	return 1;
 }
 
