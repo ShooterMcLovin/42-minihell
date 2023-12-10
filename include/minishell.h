@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:22:24 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:30:20 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define PROMPT "Minishell-0.9$ "
+# define PROMPT "Minishell-1.0$ "
 # define HEREDOC "heredoc > "
 //Token types 0-10
 # define EMPTY 0
