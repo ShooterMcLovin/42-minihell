@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:24:30 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 13:03:04 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:04:58 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,6 @@ int	is_empty(char *input)
 		return (1);
 	while (input[i] && (isspace(input[i]) || input[i] == '|'))
 	{
-		if (input[i] == '|')
-		{
-			return (syntax_error() +  1);
-		}
 		i++;
 	}
 	if (input[i] == '\0')

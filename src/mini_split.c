@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 20:20:09 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 13:06:45 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:06:28 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ int	word_len(char *s, int start)
 
 	trigger = 0;
 	len = 0;
-	if (s[start] == '|')
+	if (s[start] == '<' &&s[ start + 1] && s[start + 1 ] == '<')
+		return 2;
+	if (s[start] == '>' &&s[ start + 1] && s[start + 1 ] == '>')
+		return 2;
+	if (s[start] == '|' || s[start] == '<' || s[start] == '>')
 		return (1);
 	if (s[start] == 39)
 	{
@@ -71,8 +75,13 @@ int	word_len(char *s, int start)
 			return len + 1;
 		else if (s[start] == 39 && trigger == 2)
 			return len + 1;		
-		else if ((is_char_sep(s[start]) || (s[start+1] && (is_char_sep(s[start + 1]))))  && trigger == 0)
+		else if (is_char_sep(s[start])  && s[start+1] && !is_char_sep(s[start + 1])&& trigger == 0){
 			return (len);
+		}
+			
+		else if (is_char_sep(s[start]) && s[start+1] && is_char_sep(s[start + 1]) && trigger == 0){
+			return (len);
+		}
 		len++;
 		start++;
 	}

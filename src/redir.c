@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 10:49:01 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:01:13 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int	heredoc(t_token *token)
 		here_doc_cmd = build_heredoc_cmd2(token);
 		env = env_l_to_dbl_arr(token->env);
 		path = get_path(token);
+		if (is_sep(here_doc_cmd[0]))
+			return 1;
 		if ((execve(path, here_doc_cmd, env) < 0))
 		{
 			free(here_doc_cmd);
