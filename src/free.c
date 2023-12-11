@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:13:03 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:20:08 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:47:31 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	free_minishell(t_mini *mini)
 {
 	int	err_no;
 
-	err_no = mini->errno;
+	err_no = g_errno;
 	free_env(mini->env_test);
 	mini->env = NULL;
 	if (mini->tokens)

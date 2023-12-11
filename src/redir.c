@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:00:20 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 15:21:14 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:49:01 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,14 @@ void	redir2(t_token *token)
 	if (token->next_sep && token->next_sep[0] == '|')
 	{
 		do_pipe(token);
+		ft_printf("**********TEST***********\n");
 	}
 	dup2(token->fd_in, 0);
-	if (token->next->type == PIPE)
+	if (token->next->type == PIPE){
+
 		do_pipe2(token);
+		ft_printf("****************TEST2*******************\n");
+	}
 	else
 		exec(token);
 }

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 09:08:26 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:43:15 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ char	*get_prompt(char *prt)
 void	run_minishell(t_mini *mini)
 {
 	// print_token(mini);
-	// g_errno = 0;
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
 	wait_pids(mini->tokens);
@@ -107,13 +106,11 @@ int	main(int ac, char **av, char **env)
 {
 	static t_mini	*mini;
 	int				parsing;
-	// pid_t			pid;
-	// pid = getpid();
-	// ft_printf("PID: %d\n", pid);
 	(void)av;
 	if (ac > 1)
 		return (0);
 	mini = get_data();
+	g_errno = 0;
 	init_minishell(env);
 	while (1)
 	{
@@ -122,16 +119,18 @@ int	main(int ac, char **av, char **env)
 		if (!is_empty(mini->input))
 		{
 			parsing = ft_parse(mini);
-			if (parsing == -1)
+			if (parsing < 0)
 			{
-				ft_putendl_fd("exit", 2);
+				if (parsing == -1)
+					ft_putendl_fd("exit", 2);
 				free(mini->input);
-				return (free_minishell(mini));
+				free_minishell(mini);
+				return (g_errno);
 			}
 			else if (parsing > 0)
 				run_minishell(mini);
 			// reset_minishell(mini);
 		}
 	}
-	return (mini->errno);
+	return (g_errno);
 }

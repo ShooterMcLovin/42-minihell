@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:30:20 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 13:03:16 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int						is_builtin(t_token *token);
 int						ft_parse(t_mini *mini);
 int						parse_mini_cmds(t_mini *mini);
 int						is_empty(char *input);
+int is_char_sep(int c);
 int						has_equal_sign(char **var);
 int						tokeniser(t_mini *mini);
 char					**env_l_to_dbl_arr(t_environ *env);

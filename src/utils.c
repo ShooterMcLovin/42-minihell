@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:24:30 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/09 09:21:38 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 13:03:04 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,12 @@ int	is_empty(char *input)
 	}
 	if (input[i] == '\0')
 		return (1);
+	return (0);
+}
+
+int is_char_sep(int c)
+{
+	if ((c == '|' || c == '>' || c == '<'))
+			return (1);
 	return (0);
 }

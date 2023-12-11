@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:19:56 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:36:13 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ char	*get_path(t_token *token)
 	return (releaser(allpath));
 }
 
+void	exec_fail(t_token *token, char *path, char **env)
+{
+	command_not_found(token->cmd[0]);
+	free_child(token->mini);
+	releaser(env);
+	free(path);
+	exit(0);
+}
+
 int	exec(t_token *token)
 {
 	char	*path;
@@ -54,14 +63,10 @@ int	exec(t_token *token)
 	if (token->type < 0)
 		return (1);
 	path = get_path(token);
+	if (is_sep(token->cmd[0]))
+		exec_fail(token, path, env);
 	if (path == NULL || execve(path, token->cmd, env) < 0)
-	{
-		command_not_found(token->cmd[0]);
-		free_child(token->mini);
-		releaser(env);
-		free(path);
-		exit(0);
-	}
+		exec_fail(token, path, env);
 	return (0);
 }
 

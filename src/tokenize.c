@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:20:43 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:32:50 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ int	check_cmd(t_token *token)
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			releaser(allpath);
 			free(exec);
-			return (0);
+			g_errno = 0;
 		}
-		else
+		else{
 			free(exec);
+			g_errno = 127;
+		}
 	}
 	releaser(allpath);
-	g_errno = 127;
-	return (127);
+	return (g_errno);
 }
 
 int check_file_exists(t_token *token)
 {
-	if (token->cmd && token->cmd[1] && !is_builtin(token))
+	if (token->cmd && token->cmd[1])
 	{
 		if (token->cmd[1][0] != '-')
 		{
@@ -59,9 +59,14 @@ int check_file_exists(t_token *token)
 
 int get_errno(t_token *token)
 {
-	if (check_cmd(token))
+	t_mini *mini;
+	mini = get_data();
+	if (is_builtin(token))
+		return (0);
+	else if (!ft_strncmp(token->cmd[0] , "exit", 5))
+		return g_errno;
+	else if (check_cmd(token))
 		g_errno = check_cmd(token);
-	
 	else if (check_file_exists(token))
 		g_errno = 1;
 	return g_errno; 
@@ -86,7 +91,7 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 	{
 		if (!has_quotes(mini->cmds[cmd_index]))
 			tokens->cmd[wrd_no] = ft_strdup(mini->cmds[cmd_index]);
-		else if (is_quoted(mini->cmds[cmd_index]) == 2)
+		else if ((has_quotes(mini->cmds[cmd_index]) == 2))
 			tokens->cmd[wrd_no] = ft_strdup2(mini->cmds[cmd_index]);
 		else
 			tokens->cmd[wrd_no] = ft_strdup2(mini->cmds[cmd_index]);

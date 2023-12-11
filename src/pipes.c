@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 15:26:15 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:45:21 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	do_pipe2(t_token *token)
 		if (token->next->next->cmd)
 			exec_and_stuff(token->next->next);
 		waitpid(pid,NULL, 0);
-		free_child(token->mini);
+		// free_child(token->mini);
 		// exec(token);
 	}
 }
