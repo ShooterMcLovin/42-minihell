@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:29:28 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:08:26 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	set_shlvl(void)
 	new_SHLVL = (ft_itoa(sh_lvl));
 	update_env_part(mini, shlvl, new_SHLVL);
 	new_SHLVL = ft_free(new_SHLVL);
-	shlvl = ft_free(shlvl);
+	free(shlvl);
 	return (1);
 }
 
