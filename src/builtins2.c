@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:22:48 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/10 17:08:23 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:58:52 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	is_builtin(t_token *token)
 	if (!ft_strncmp(token->cmd[0], "pwd", 3))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "PWD", 3))
-		return (1);
+		return (0);
 	else if (!ft_strncmp(token->cmd[0], "cd", 2))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "unset", 5))
@@ -106,7 +106,7 @@ int	is_builtin(t_token *token)
 	else if (!ft_strncmp(token->cmd[0], "env", 3))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "echo", 5))
-		return (1);
+		return (0);
 	else
 		return (0);
 }

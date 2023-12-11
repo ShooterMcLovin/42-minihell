@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 14:53:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:58:06 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	run_minishell(t_mini *mini)
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
 	wait_pids(mini->tokens);
+	wait_c_pids(mini->tokens);
 	free_tokens(mini->tokens);
 }
 
@@ -127,8 +128,11 @@ int	main(int ac, char **av, char **env)
 				free_minishell(mini);
 				return (g_errno);
 			}
-			else if (parsing > 0)
+			else if (parsing > 0){
+
 				run_minishell(mini);
+			
+			}
 			// reset_minishell(mini);
 		}
 	}

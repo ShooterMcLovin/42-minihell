@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 12:32:50 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:42:11 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 	}
 	tokens->cmd[wrd_no] = NULL;
 	tokens->type = 0;
-	tokens->pid = -1;
 	tokens->token_no = x;
 	tokens->env = mini->env_test;
 	tokens->fd_out = 0;

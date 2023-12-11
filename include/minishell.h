@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 13:03:16 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:12:42 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ char					*get_path(t_token *token);
 void					absolute_path(t_token *token);
 int						exec(t_token *token);
 void					wait_pids(t_token *token);
+void					wait_c_pids(t_token *token);
 int						heredoc(t_token *token);
 void					do_pipe3(t_token *token);
 void					do_pipe2(t_token *token);

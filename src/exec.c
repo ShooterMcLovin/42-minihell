@@ -6,11 +6,12 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 12:36:13 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:57:59 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <sys/wait.h>
 
 char	*get_path(t_token *token)
 {
@@ -74,10 +75,24 @@ void	wait_pids(t_token *token)
 {
 	t_token	*head;
 
-	head = token;
-	while (head)
+	head = token->mini->tokens;
+	while (head->next)
 	{
-		waitpid(head->pid, NULL, 0);
+		if(head->pid)
+			waitpid(head->pid, NULL, 0);
+		head = head->next;
+	}
+}
+
+void	wait_c_pids(t_token *token)
+{
+	t_token	*head;
+
+	head = token->mini->tokens;
+	while (head->next)
+	{
+		if(head->child_pid)
+			waitpid(head->child_pid, NULL, 0);
 		head = head->next;
 	}
 }
@@ -100,6 +115,8 @@ void	do_child_stuff(t_token *token)
 		do_pipe(token);
 	else if (!ft_strncmp(token->cmd[0], "echo", 5))
 		ft_echo(token);
+	else if (!ft_strncmp(token->cmd[0], "pwd", 4))
+		ft_pwd(token);
 	else
 		exec(token);
 	free_child(token->mini);
@@ -123,9 +140,14 @@ void	exec_and_stuff(t_token *token)
 			do_child_stuff(head);
 		else
 		{
-			head = mini->tokens;
-			wait_pids(head);
-			waitpid(pid, NULL, 0);
+			token->child_pid = pid;
+			// 	wait_c_pids(mini->tokens);
+			// wait(0);
+			// wait_pids(head);
+			// 	wait_pids(mini->tokens);
+			// waitpid(pid,0,0);
+			
 		}
 	}
+	
 }
