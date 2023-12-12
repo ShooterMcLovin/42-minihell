@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 18:57:59 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:10:58 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	wait_pids(t_token *token)
 	t_token	*head;
 
 	head = token->mini->tokens;
-	while (head->next)
+	while (head)
 	{
 		if(head->pid)
 			waitpid(head->pid, NULL, 0);
@@ -89,7 +89,7 @@ void	wait_c_pids(t_token *token)
 	t_token	*head;
 
 	head = token->mini->tokens;
-	while (head->next)
+	while (head)
 	{
 		if(head->child_pid)
 			waitpid(head->child_pid, NULL, 0);
@@ -140,11 +140,11 @@ void	exec_and_stuff(t_token *token)
 			do_child_stuff(head);
 		else
 		{
-			token->child_pid = pid;
-			// 	wait_c_pids(mini->tokens);
+			token->pid = pid;
+				// wait_pids(mini->tokens);
+				// wait_c_pids(mini->tokens);
 			// wait(0);
-			// wait_pids(head);
-			// 	wait_pids(mini->tokens);
+			wait_pids(mini->tokens);
 			// waitpid(pid,0,0);
 			
 		}

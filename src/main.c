@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 18:58:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:10:55 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void	run_minishell(t_mini *mini)
 	// print_token(mini);
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
-	wait_pids(mini->tokens);
-	wait_c_pids(mini->tokens);
+	
+	// wait_c_pids(mini->tokens);
 	free_tokens(mini->tokens);
 }
 

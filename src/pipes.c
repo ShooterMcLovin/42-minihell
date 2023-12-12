@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 18:50:43 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:01:14 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	do_pipe(t_token *token)
 		exit(0);
 	if (!pid)
 	{
-		token->child_pid = pid;
+		// token->child_pid = pid;
 		close(token->p_fd[0]);
 		dup2(token->p_fd[1], 1);
 		close(token->p_fd[1]);
