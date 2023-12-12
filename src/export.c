@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:01:37 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 17:12:44 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:20:39 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	do_export(t_mini *mini, t_export *export, char **var)
 	t_environ	*head_new;
 
 	x = 0;
-	while (export->next != NULL)
+	while (export != NULL)
 	{
 		temp = get_env_part(mini, export->env_var);
 		if (temp[0] != '\0')
