@@ -6,11 +6,12 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 19:10:55 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:36:57 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 #include <unistd.h>
 
 int	set_shlvl(void)
@@ -85,8 +86,7 @@ char	*get_prompt(char *prt)
 	char	*line;
 
 	line = readline(prt);
-	if (line)
-	{
+	if (line){
 		add_history(line);
 		return (line);
 	}
@@ -99,7 +99,8 @@ void	run_minishell(t_mini *mini)
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
 	
-	// wait_c_pids(mini->tokens);
+	wait_pids(mini->tokens);
+	wait_c_pids(mini->tokens);
 	free_tokens(mini->tokens);
 }
 

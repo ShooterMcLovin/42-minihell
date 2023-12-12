@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 19:10:58 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:38:18 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	exec_and_stuff(t_token *token)
 			do_child_stuff(head);
 		else
 		{
-			token->pid = pid;
+			head->child_pid = pid;
 				// wait_pids(mini->tokens);
 				// wait_c_pids(mini->tokens);
 			// wait(0);

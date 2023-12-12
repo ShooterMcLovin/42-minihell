@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 19:01:14 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:43:51 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	do_pipe(t_token *token)
 {
 	pid_t	pid;
-
 	if (is_empty(token->next->cmd[0]))
 		return ;
 	if (pipe(token->p_fd) == -1)
@@ -41,8 +40,8 @@ void	do_pipe(t_token *token)
 		close(token->p_fd[0]);
 		// waitpid(pid, NULL, 0);
 		exec_and_stuff(token->next);
+		free_child(token->mini);
 		exit(0);
-		// free_child(token->mini);
 
 	}
 }
@@ -99,6 +98,7 @@ void	do_pipe3(t_token *token)
 		close(p_fd[0]);
 		dup2(p_fd[1], 1);
 		close(p_fd[1]);
+		close(token->fd_hd);
 		path = get_path(token);
 		here_doc_cmd = build_heredoc_cmd2(token);
 		if (execve(path, here_doc_cmd,
