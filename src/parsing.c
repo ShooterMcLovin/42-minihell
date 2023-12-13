@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:59:47 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 16:42:55 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:38:18 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	parse_mini_cmds(t_mini *mini)
 	while (mini->cmds[++cmd_no])
 	{
 		if (has_dollar_sign(mini->cmds[cmd_no]) != 0
-			|| (mini->cmds[cmd_no][0] == '$' && mini->cmds[cmd_no][1] && mini->cmds[cmd_no][1] != '$'))
+			|| (mini->cmds[cmd_no][0] == '$' && mini->cmds[cmd_no][1]
+				&& mini->cmds[cmd_no][1] != '$'))
 		{
 			if (has_quotes(mini->cmds[cmd_no]) != 2)
 				mini->cmds[cmd_no] = dollar_sign(mini->cmds[cmd_no]);
@@ -58,7 +59,8 @@ int	check_input(t_mini *mini)
 	x = 0;
 	while (mini->cmds[x])
 	{
-		if (is_sep(mini->cmds[x]) && (!mini->cmds[x + 1] || !mini->cmds[x + 1][0]))
+		if (is_sep(mini->cmds[x]) && (!mini->cmds[x + 1] || !mini->cmds[x
+					+ 1][0]))
 		{
 			ft_putstr_fd("minishell: syntax error\n", 2);
 			g_errno = 258;

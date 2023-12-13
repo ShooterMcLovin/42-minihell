@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:12:57 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 10:36:07 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:09:49 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int	check_valid_quotes(char *input)
 		return (1);
 }
 
-int is_quote(int c)
+int	is_quote(int c)
 {
 	if (c == 34)
-		return 1;
+		return (1);
 	else if (c == 39)
-		return 2;
+		return (2);
 	else
-	 	return 0;
+		return (0);
 }

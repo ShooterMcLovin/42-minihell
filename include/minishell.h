@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 17:12:42 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:23:33 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int						ft_builtins(t_token *token);
 int						is_builtin(t_token *token);
 
 /*Parse*/
+t_token	*init_tokens(t_mini *mini, int cmd_index, int x);
 int						ft_parse(t_mini *mini);
 int						parse_mini_cmds(t_mini *mini);
 int						is_empty(char *input);
@@ -129,6 +130,8 @@ char					*dollar_sign(char *mini_cmd);
 int						has_quotes(char *str);
 
 /*Env*/
+
+int	set_shlvl(void);
 t_environ				*new_env(char **var);
 t_environ				*new_env2(char *var);
 t_environ				*new_env_list(char *content);

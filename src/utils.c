@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:24:30 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 14:54:15 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:11:33 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,10 @@ int	is_empty(char *input)
 	while (input[i] && (isspace(input[i]) || input[i] == '|'))
 	{
 		if (input[i] == '|')
-			return(syntax_error());
+			return (syntax_error());
 		i++;
 	}
 	if (input[i] == '\0')
 		return (1);
-	return (0);
-}
-
-int is_char_sep(int c)
-{
-	if ((c == '|' || c == '>' || c == '<'))
-			return (1);
 	return (0);
 }

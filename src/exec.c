@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 20:38:18 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:34:27 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	wait_pids(t_token *token)
 	head = token->mini->tokens;
 	while (head)
 	{
-		if(head->pid)
+		if (head->pid)
 			waitpid(head->pid, NULL, 0);
 		head = head->next;
 	}
@@ -91,63 +91,8 @@ void	wait_c_pids(t_token *token)
 	head = token->mini->tokens;
 	while (head)
 	{
-		if(head->child_pid)
+		if (head->child_pid)
 			waitpid(head->child_pid, NULL, 0);
 		head = head->next;
 	}
-}
-
-void	do_child_stuff(t_token *token)
-{
-	if (token->type == ABS)
-		absolute_path(token);
-	else if (token->type == REDIR_IN)
-		redir(token);
-	else if (token->type == REDIR_OUT)
-		redir2(token);
-	else if (token->type == REDIR_DBL2)
-		heredoc(token);
-	else if (token->type == REDIR_DBL)
-		redir_append(token);
-	else if (token->type == -3)
-		do_pipe3(token);
-	else if (token->type == PIPE || ft_strncmp(token->next_sep, "|", 1))
-		do_pipe(token);
-	else if (!ft_strncmp(token->cmd[0], "echo", 5))
-		ft_echo(token);
-	else if (!ft_strncmp(token->cmd[0], "pwd", 4))
-		ft_pwd(token);
-	else
-		exec(token);
-	free_child(token->mini);
-	exit(0);
-}
-
-void	exec_and_stuff(t_token *token)
-{
-	t_token	*head;
-	t_mini	*mini;
-	pid_t	pid;
-
-	mini = get_data();
-	if (token == NULL)
-		return ;
-	head = token;
-	if (!ft_builtins(head))
-	{
-		pid = fork();
-		if (!pid)
-			do_child_stuff(head);
-		else
-		{
-			head->child_pid = pid;
-				// wait_pids(mini->tokens);
-				// wait_c_pids(mini->tokens);
-			// wait(0);
-			wait_pids(mini->tokens);
-			// waitpid(pid,0,0);
-			
-		}
-	}
-	
 }

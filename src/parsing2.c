@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:04:07 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/10 13:54:52 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:05:55 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,20 @@ char	*get_dollar_sign(char *mini_cmd)
 	return (dollar_sign);
 }
 
-int dollar_len(char *mini_cmd)
+int	dollar_len(char *mini_cmd)
 {
-	int i = 0;
-	while(mini_cmd && mini_cmd[i] && mini_cmd[i] != '$')
-		i++;
-	while(mini_cmd && mini_cmd[i] && !isspace(mini_cmd[i])){
+	int	i;
 
+	i = 0;
+	while (mini_cmd && mini_cmd[i] && mini_cmd[i] != '$')
+		i++;
+	while (mini_cmd && mini_cmd[i] && !isspace(mini_cmd[i]))
+	{
 		i++;
 		if (is_quote(mini_cmd[i]))
-			return i + 1;
+			return (i + 1);
 	}
-	return i + 1;
+	return (i + 1);
 }
 
 char	*dollar_sign(char *mini_cmd)
@@ -70,8 +72,7 @@ char	*dollar_sign(char *mini_cmd)
 	if (mini_cmd[1] && mini_cmd[1] == '?')
 		return (ft_itoa(g_errno));
 	if (!mini_cmd[1])
-		return mini_cmd;
-	
+		return (mini_cmd);
 	pre_dollar = pre_dollar_sign(mini_cmd);
 	get_dollar = get_dollar_sign(mini_cmd);
 	dollar_sign = ft_strjoin(pre_dollar, get_dollar);
@@ -94,10 +95,10 @@ int	has_dollar_sign(char *input)
 	{
 		if (input[i] == '$')
 		{
-			while (input [i+1] && input[i + 1] == '$')
+			while (input[i + 1] && input[i + 1] == '$')
 				i++;
-			if (!input[i + 1] )
-				return 0;
+			if (!input[i + 1])
+				return (0);
 			return (i);
 		}
 		i++;

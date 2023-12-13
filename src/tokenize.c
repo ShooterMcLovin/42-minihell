@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:52:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 20:36:02 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:34:50 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	check_cmd(t_token *token)
 			free(exec);
 			g_errno = 0;
 		}
-		else{
+		else
+		{
 			free(exec);
 			g_errno = 127;
 		}
@@ -42,34 +43,49 @@ int	check_cmd(t_token *token)
 	return (g_errno);
 }
 
-int check_file_exists(t_token *token)
+int	check_file_exists(t_token *token)
 {
 	if (token->cmd && token->cmd[1])
 	{
 		if (token->cmd[1][0] != '-')
 		{
 			if (access(token->cmd[1], F_OK | X_OK) == 0)
-				return 0;
+				return (0);
 			else
-				return 1;
+				return (1);
 		}
 	}
-	return g_errno;
+	return (g_errno);
 }
 
-int get_errno(t_token *token)
+int	get_errno(t_token *token)
 {
-	t_mini *mini;
+	t_mini	*mini;
+
 	mini = get_data();
 	if (is_builtin(token))
 		return (0);
-	else if (!ft_strncmp(token->cmd[0] , "exit", 5))
-		return g_errno;
+	else if (!ft_strncmp(token->cmd[0], "exit", 5))
+		return (g_errno);
 	else if (check_cmd(token))
 		g_errno = check_cmd(token);
 	else if (check_file_exists(token))
 		g_errno = 1;
-	return g_errno; 
+	return (g_errno);
+}
+
+void	set_var_tokens(t_mini *mini, t_token *tokens, int x, int wrd_no)
+{
+	tokens->cmd[wrd_no] = NULL;
+	tokens->type = 0;
+	tokens->token_no = x;
+	tokens->pid = -1;
+	tokens->child_pid = -1;
+	tokens->env = mini->env_test;
+	tokens->fd_out = 0;
+	tokens->mini = mini;
+	tokens->next = NULL;
+	tokens->errnum = get_errno(tokens);
 }
 
 t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
@@ -81,11 +97,7 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 	tokens = malloc(sizeof(t_token));
 	tokens->cmd = malloc(sizeof(char *) * 5);
 	if (mini->cmds[cmd_index] && is_sep(mini->cmds[cmd_index]))
-	{
-		tokens->cmd[wrd_no] = ft_strdup(mini->cmds[cmd_index]);
-		cmd_index++;
-		wrd_no++;
-	}
+		tokens->cmd[wrd_no++] = ft_strdup(mini->cmds[cmd_index++]);
 	while (!is_sep(mini->cmds[cmd_index]) && !is_empty(mini->cmds[cmd_index])
 		&& mini->cmds[cmd_index])
 	{
@@ -98,110 +110,6 @@ t_token	*init_tokens(t_mini *mini, int cmd_index, int x)
 		wrd_no++;
 		cmd_index++;
 	}
-	tokens->cmd[wrd_no] = NULL;
-	tokens->type = 0;
-	tokens->token_no = x;
-	tokens->pid = -1;
-	tokens->child_pid = -1;
-	tokens->env = mini->env_test;
-	tokens->fd_out = 0;
-	tokens->mini = mini;
-	tokens->next = NULL;
-	tokens->errnum = get_errno(tokens);
+	set_var_tokens(mini, tokens, x, wrd_no);
 	return (tokens);
-}
-
-void	ft_chain(t_mini *mini, int cmd_index)
-{
-	int		x;
-	t_token	*head;
-
-	x = 1;
-	head = mini->tokens;
-	if (is_sep(mini->cmds[cmd_index]))
-		cmd_index++;
-	while (cmd_index < mini->no_wrds || mini->cmds[cmd_index] != NULL)
-	{
-		if (is_sep(mini->cmds[cmd_index]) && mini->cmds[cmd_index + 1]
-			&& cmd_index)
-			cmd_index++;
-		mini->tokens->next = init_tokens(mini, cmd_index, x++);
-		mini->tokens = mini->tokens->next;
-		while (mini->cmds[cmd_index] && !is_sep(mini->cmds[cmd_index]))
-			cmd_index++;
-		if ((mini->cmds[cmd_index]))
-			mini->tokens->next_sep = ft_strdup(mini->cmds[cmd_index]);
-		else
-			mini->tokens->next_sep = NULL;
-	}
-	mini->tokens = head;
-}
-
-int	get_types(t_mini *mini)
-{
-	t_token	*head;
-
-	head = mini->tokens;
-	while (mini->tokens != NULL)
-	{
-		if (mini->tokens->type >= 0)
-		{
-			if (mini->tokens->next_sep)
-			{
-				if (!ft_strncmp(mini->tokens->next_sep, "|", 2))
-					mini->tokens->type = PIPE;
-				else if (!ft_strncmp(mini->tokens->next_sep, "<<", 3))
-					mini->tokens->type = REDIR_DBL2;
-				else if (!ft_strncmp(mini->tokens->next_sep, ">>", 3))
-					mini->tokens->type = REDIR_DBL;
-				else if (!ft_strncmp(mini->tokens->next_sep, ">", 2))
-				{
-					mini->tokens->type = REDIR_IN;
-					if (mini->tokens->next
-						&& mini->tokens->next->next_sep == NULL)
-						mini->tokens->next->type = -1;
-				}
-			}
-			else
-				mini->tokens->type = 1;
-			if (!ft_strncmp(mini->tokens->cmd[0], "<", 2))
-				mini->tokens->type = REDIR_OUT;
-			if (!ft_strncmp(mini->tokens->cmd[0], ">", 2))
-			{
-				mini->tokens->type = REDIR_IN;
-				redir(mini->tokens);
-				return (1);
-			}
-			if (mini->tokens->cmd && (mini->tokens->cmd[0][0] == '.'
-					|| mini->tokens->cmd[0][0] == '/'))
-				mini->tokens->type = ABS;
-		}
-		mini->tokens = mini->tokens->next;
-	}
-	mini->tokens = head;
-	return (1);
-}
-
-int	tokeniser(t_mini *mini)
-{
-	int		x;
-	t_token	*head;
-	int		cmd_index;
-
-	x = 0;
-	cmd_index = 0;
-	mini->tokens = init_tokens(mini, cmd_index, x);
-	head = mini->tokens;
-	while (mini->cmds[cmd_index] && !is_sep(mini->cmds[cmd_index]))
-		cmd_index++;
-	if (mini->cmds[cmd_index] && is_sep(mini->cmds[cmd_index]))
-		mini->tokens->next_sep = ft_strdup(mini->cmds[cmd_index]);
-	else
-		mini->tokens->next_sep = NULL;
-	ft_chain(mini, cmd_index);
-	mini->tokens = head;
-	releaser(mini->cmds);
-	if (!get_types(mini))
-		return (0);
-	return (1);
 }

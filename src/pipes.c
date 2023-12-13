@@ -3,18 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:34:54 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 20:43:51 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:18:07 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void	child_do_pipe(t_token *token)
+{
+	close(token->p_fd[0]);
+	dup2(token->p_fd[1], 1);
+	close(token->p_fd[1]);
+	exec(token);
+	free_minishell(token->mini);
+	exit(0);
+}
+
 void	do_pipe(t_token *token)
 {
 	pid_t	pid;
+
 	if (is_empty(token->next->cmd[0]))
 		return ;
 	if (pipe(token->p_fd) == -1)
@@ -23,28 +34,24 @@ void	do_pipe(t_token *token)
 	if (pid == -1)
 		exit(0);
 	if (!pid)
-	{
-		// token->child_pid = pid;
-		close(token->p_fd[0]);
-		dup2(token->p_fd[1], 1);
-		close(token->p_fd[1]);
-		exec(token);
-		free_minishell(token->mini);
-		exit(0);
-	}
+		child_do_pipe(token);
 	else
 	{
 		token->pid = pid;
 		close(token->p_fd[1]);
 		dup2(token->p_fd[0], 0);
 		close(token->p_fd[0]);
-		// waitpid(pid, NULL, 0);
 		exec_and_stuff(token->next);
 		free_child(token->mini);
 		exit(0);
-
 	}
 }
+
+// void child_do_pipe2(t_token *token)
+// {
+
+// }
+
 void	do_pipe2(t_token *token)
 {
 	pid_t	pid;
@@ -74,11 +81,15 @@ void	do_pipe2(t_token *token)
 		close(p_fd[0]);
 		if (token->next->next->cmd)
 			exec_and_stuff(token->next->next);
-		waitpid(pid,NULL, 0);
-		// free_child(token->mini);
-		// exec(token);
+		waitpid(pid, NULL, 0);
 	}
 }
+
+// void child_do_pipe3(t_token *token)
+// {
+
+// }
+
 void	do_pipe3(t_token *token)
 {
 	pid_t	pid;
@@ -116,11 +127,8 @@ void	do_pipe3(t_token *token)
 		close(token->fd_hd);
 		if (token->next->next)
 			exec_and_stuff(token->next->next);
-		// exec(token->next->next);
 		waitpid(token->pid, 0, 0);
 		free_child(token->mini);
-		// free_minishell(token->mini);
 		exit(0);
-		// exec(token);
 	}
 }

@@ -3,52 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 20:36:57 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:47:12 by siroulea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <stdio.h>
 #include <unistd.h>
-
-int	set_shlvl(void)
-{
-	char	*cur_shlvl;
-	int		sh_lvl;
-	char	*shlvl;
-	char	*new_SHLVL;
-	t_mini	*mini;
-
-	mini = get_data();
-	shlvl = ft_strdup("SHLVL");
-	cur_shlvl = get_env_part(mini, shlvl);
-	if (cur_shlvl == NULL)
-		return (0);
-	sh_lvl = ft_atoi(cur_shlvl);
-	sh_lvl++;
-	new_SHLVL = (ft_itoa(sh_lvl));
-	update_env_part(mini, shlvl, new_SHLVL);
-	new_SHLVL = ft_free(new_SHLVL);
-	free(shlvl);
-	return (1);
-}
-
-t_mini	*get_data(void)
-{
-	static t_mini	*mini;
-
-	if (!mini)
-	{
-		mini = ft_calloc(1, sizeof(t_mini));
-		if (!mini)
-			return (NULL);
-		return (mini);
-	}
-	return (mini);
-}
 
 void	*releaser(char **table)
 {
@@ -76,7 +40,6 @@ int	init_minishell(char **env)
 	mini->cmds = NULL;
 	set_env(mini, env);
 	set_shlvl();
-
 	update_env_part(mini, "OLDPWD", "/");
 	return (1);
 }
@@ -86,7 +49,8 @@ char	*get_prompt(char *prt)
 	char	*line;
 
 	line = readline(prt);
-	if (line){
+	if (line)
+	{
 		add_history(line);
 		return (line);
 	}
@@ -95,10 +59,8 @@ char	*get_prompt(char *prt)
 
 void	run_minishell(t_mini *mini)
 {
-	// print_token(mini);
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
-	
 	wait_pids(mini->tokens);
 	wait_c_pids(mini->tokens);
 	free_tokens(mini->tokens);
@@ -108,6 +70,7 @@ int	main(int ac, char **av, char **env)
 {
 	static t_mini	*mini;
 	int				parsing;
+
 	(void)av;
 	if (ac > 1)
 		return (0);
@@ -129,13 +92,55 @@ int	main(int ac, char **av, char **env)
 				free_minishell(mini);
 				return (g_errno);
 			}
-			else if (parsing > 0){
-
+			else if (parsing > 0)
 				run_minishell(mini);
-			
-			}
-			// reset_minishell(mini);
 		}
 	}
 	return (g_errno);
 }
+
+
+// cat -e < a
+//
+
+// cat -e  << a
+// ne fait pas le "-e"
+
+// export a=1 b=2
+
+// unset a c
+// devrai unset les deux
+
+// export b=2
+// si je re export une deusieme fois ca fontionne pas devrais etre la nouvelle valeur
+
+// exit 6 
+// senser donne le 6 quand tu fait echo $?
+
+// donne pas 0 si la commande a fonctionnner tjrs 127
+
+// signaux heredoc
+
+//encore des leaks dans export
+//definitely lost: 41 bytes in 2 blocks
+//indirectly lost: 15 bytes in 2 blocks
+
+//leaks dans unset aussi
+// 2 block de plus dans indirectly
+
+// leaks dans $?
+// 1 leaks
+
+//echo $PATH
+// 2 leaks
+
+// exit 1 1 1 1 leaks on peu le bloquer
+// si il y as plus que 1 chiffre"arguments" ca leaks sinon non
+
+
+
+
+
+
+
+
