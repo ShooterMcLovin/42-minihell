@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 14:23:33 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:47:02 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void					do_pipe(t_token *token);
 void					redir(t_token *token);
 void					redir2(t_token *token);
 void					redir_append(t_token *token);
+int token_size(t_token *token);
+char	**build_redir_cmd(t_token *token);
 char					**build_heredoc_cmd2(t_token *token);
 
 /*Utils*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:59:47 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 12:38:18 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:07:27 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ int	parse_mini_cmds(t_mini *mini)
 				&& mini->cmds[cmd_no][1] != '$'))
 		{
 			if (has_quotes(mini->cmds[cmd_no]) != 2)
-				mini->cmds[cmd_no] = dollar_sign(mini->cmds[cmd_no]);
+			{
+				// free(mini->cmds[cmd_no]);
+				mini->cmds[cmd_no] = (dollar_sign(mini->cmds[cmd_no]));
+			}
 		}
+		// cmd_no++;
 	}
 	mini->cmds[cmd_no] = NULL;
 	if (is_empty(mini->cmds[0]))
@@ -115,5 +119,6 @@ int	ft_parse(t_mini *mini)
 		return (0);
 	if (!ft_strncmp(mini->tokens->cmd[0], "exit", 5))
 		return (ft_exit(mini->tokens->cmd));
+	// releaser(mini->cmds);
 	return (1);
 }

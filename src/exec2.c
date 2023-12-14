@@ -3,39 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 14:09:24 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/13 16:28:55 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:39:40 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <sys/wait.h>
 
 void	do_child_stuff(t_token *token)
 {
-	if (token->type == ABS)
+
+	if (token->type == PIPE || ft_strncmp(token->next_sep, "|", 1))
+		do_pipe(token);
+	else if (token->type == ABS)
 		absolute_path(token);
-	else if (token->type == REDIR_IN)
-		redir(token);
-	else if (token->type == REDIR_OUT)
-		redir2(token);
-	else if (token->type == REDIR_DBL2)
-		heredoc(token);
-	else if (token->type == REDIR_DBL)
-		redir_append(token);
 	else if (token->type == -3)
 		do_pipe3(token);
-	else if (token->type == PIPE || ft_strncmp(token->next_sep, "|", 1))
-		do_pipe(token);
-	else if (!ft_strncmp(token->cmd[0], "echo", 5))
-		ft_echo(token);
-	else if (!ft_strncmp(token->cmd[0], "pwd", 4))
-		ft_pwd(token);
 	else
 		exec(token);
-	free_child(token->mini);
+	// free_child(token->mini);
 	exit(0);
 }
 
@@ -49,15 +37,27 @@ void	exec_and_stuff(t_token *token)
 	if (token == NULL)
 		return ;
 	head = token;
-	if (!ft_builtins(head))
+	pid = fork();
+
+	if (!pid)
 	{
-		pid = fork();
-		if (!pid)
-			do_child_stuff(head);
+		if (head->type == REDIR_OUT)
+			redir2(head);
+		else if (token->type == REDIR_IN)
+			redir(token);
+		else if (token->type == REDIR_DBL)
+			redir(token);
+		else if (token->type == REDIR_DBL2)
+			heredoc(token);
+		else if (is_builtin(token))
+			ft_builtins(token);
 		else
-		{
-			head->child_pid = pid;
-			wait_pids(mini->tokens);
-		}
+			do_child_stuff(head);
 	}
+	else
+	{
+		head->child_pid = pid;
+		wait_pids(mini->tokens);
+	}
+	
 }

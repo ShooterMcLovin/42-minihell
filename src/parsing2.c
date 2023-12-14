@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:04:07 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 12:05:55 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:35:00 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ char	*dollar_sign(char *mini_cmd)
 	char	*get_dollar;
 	int		len;
 
-	if (mini_cmd[1] && mini_cmd[1] == '?')
-		return (ft_itoa(g_errno));
+	if (mini_cmd[1] && mini_cmd[1] == '?'){
+		free(mini_cmd);
+		mini_cmd = ft_itoa(g_errno);
+		return (mini_cmd);
+	}
 	if (!mini_cmd[1])
 		return (mini_cmd);
 	pre_dollar = pre_dollar_sign(mini_cmd);

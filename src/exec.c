@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:35:38 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 14:34:27 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:05:00 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,13 @@ int	exec(t_token *token)
 	path = get_path(token);
 	if (is_sep(token->cmd[0]))
 		exec_fail(token, path, env);
+	if (token->cmd && (token->cmd[0][0] == '.'
+		|| token->cmd[0][0] == '/'))
+		absolute_path(token);
+
 	if (path == NULL || execve(path, token->cmd, env) < 0)
 		exec_fail(token, path, env);
+	
 	return (0);
 }
 

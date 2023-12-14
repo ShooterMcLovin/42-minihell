@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:33:40 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/13 12:34:56 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:38:22 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ void	tokens_next_sep(t_token *tokens)
 	else if (!ft_strncmp(tokens->next_sep, ">>", 3))
 		tokens->type = REDIR_DBL;
 	else if (!ft_strncmp(tokens->next_sep, ">", 2))
-	{
 		tokens->type = REDIR_IN;
-		if (tokens->next && tokens->next->next_sep == NULL)
-			tokens->next->type = -1;
-	}
+	else if (!ft_strncmp(tokens->next_sep, "<", 2))
+		tokens->type = REDIR_OUT;
+	
 }
 
 void	token_type(t_token *tokens)
@@ -60,16 +59,9 @@ void	token_type(t_token *tokens)
 		tokens_next_sep(tokens);
 	else
 		tokens->type = 1;
-	if (!ft_strncmp(tokens->cmd[0], "<", 2))
-		tokens->type = REDIR_OUT;
-	if (!ft_strncmp(tokens->cmd[0], ">", 2))
-	{
-		tokens->type = REDIR_IN;
-		redir(tokens);
-	}
-	else if (tokens->cmd && (tokens->cmd[0][0] == '.'
-		|| tokens->cmd[0][0] == '/'))
-		tokens->type = ABS;
+	// else if (tokens->cmd && (tokens->cmd[0][0] == '.'
+	// 	|| tokens->cmd[0][0] == '/'))
+	// 	tokens->type = ABS;
 }
 
 int	get_types(t_mini *mini)
@@ -79,8 +71,10 @@ int	get_types(t_mini *mini)
 	head = mini->tokens;
 	while (mini->tokens != NULL)
 	{
-		if (mini->tokens->type >= 0)
-			token_type(mini->tokens);
+		if (mini->tokens->next_sep)
+			tokens_next_sep(mini->tokens);
+		else
+			mini->tokens->type = 1;
 		mini->tokens = mini->tokens->next;
 	}
 	mini->tokens = head;

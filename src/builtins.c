@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 14:59:52 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:37:38 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ int	ft_builtins(t_token *token)
 	mini = get_data();
 	if (!ft_strncmp(token->cmd[0], "PWD", 3))
 		ft_pwd(token);
+	if (!ft_strncmp(token->cmd[0], "pwd", 3))
+		ft_pwd(token);
+	if (!ft_strncmp(token->cmd[0], "echo", 3))
+		ft_echo(token);
 	else if (!ft_strncmp(token->cmd[0], "cd", 2))
 		ft_cd(mini, token);
 	else if (!ft_strncmp(token->cmd[0], "unset", 5))
@@ -106,6 +110,6 @@ int	ft_builtins(t_token *token)
 	else if (!ft_strncmp(token->cmd[0], "env", 3))
 		ft_env(token);
 	else
-		return (0);
-	return (1);
+	 	return 0;
+	return 1;
 }

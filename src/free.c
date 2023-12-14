@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:13:03 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/11 19:56:08 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:48:55 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	free_tokens(t_token *tokens)
 		free(tokens);
 		tokens = temp;
 	}
+		// free(tokens);
 }
 
 void	free_env(t_environ *env)
@@ -64,10 +65,10 @@ int	free_minishell(t_mini *mini)
 	int	err_no;
 
 	err_no = g_errno;
+	// releaser(mini->cmds);
+	free_tokens(mini->tokens);
 	free_env(mini->env_test);
-	mini->env = NULL;
-	if (mini->tokens)
-		free_tokens(mini->tokens);
+	// mini->env = NULL;
 	free(mini->shlvl);
 	free(mini);
 	return (err_no);
@@ -75,8 +76,8 @@ int	free_minishell(t_mini *mini)
 
 void	free_child(t_mini *mini)
 {
-	if (mini->tokens)
-		free_tokens(mini->tokens);
+	// releaser(mini->cmds);
+	free_tokens(mini->tokens);
 	free_env(mini->env_test);
 	free(mini);
 }

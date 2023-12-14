@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 15:47:12 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:17:07 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,18 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	*releaser(char **table)
+void	*releaser(char **tab)
 {
 	int	i;
 
 	i = 0;
-	if (table)
+	while (tab[i])
 	{
-		while (table[i])
-		{
-			free(table[i]);
-			i++;
-		}
-		free(table);
+		free(tab[i]);
+		i++;
 	}
+	free(tab[i]);
+	free(tab);
 	return (NULL);
 }
 
@@ -59,11 +57,16 @@ char	*get_prompt(char *prt)
 
 void	run_minishell(t_mini *mini)
 {
+	print_token(mini);
 	init_signals(CHILD);
 	exec_and_stuff(mini->tokens);
 	wait_pids(mini->tokens);
 	wait_c_pids(mini->tokens);
+	// free(mini->tokens);
+	free(mini->input);
+	// free_minishell(mini);
 	free_tokens(mini->tokens);
+	// free_child(mini);
 }
 
 int	main(int ac, char **av, char **env)
@@ -86,10 +89,12 @@ int	main(int ac, char **av, char **env)
 			parsing = ft_parse(mini);
 			if (parsing < 0)
 			{
-				if (parsing == -1)
+				if (parsing == -1){
+
 					ft_putendl_fd("exit", 2);
-				free(mini->input);
-				free_minishell(mini);
+					free(mini->input);
+					free_minishell(mini);
+				}
 				return (g_errno);
 			}
 			else if (parsing > 0)
@@ -99,9 +104,6 @@ int	main(int ac, char **av, char **env)
 	return (g_errno);
 }
 
-
-// cat -e < a
-//
 
 // cat -e  << a
 // ne fait pas le "-e"
@@ -121,6 +123,7 @@ int	main(int ac, char **av, char **env)
 
 // signaux heredoc
 
+/*LEAKS*/
 //encore des leaks dans export
 //definitely lost: 41 bytes in 2 blocks
 //indirectly lost: 15 bytes in 2 blocks
@@ -128,8 +131,6 @@ int	main(int ac, char **av, char **env)
 //leaks dans unset aussi
 // 2 block de plus dans indirectly
 
-// leaks dans $?
-// 1 leaks
 
 //echo $PATH
 // 2 leaks

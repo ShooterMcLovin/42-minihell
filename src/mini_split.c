@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 20:20:09 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 14:07:07 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:15:04 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,26 @@ char	*substr(char *s, int start, int len)
 	return (str);
 }
 
-char	**no_name(char *s, int wrd_no, int no_wrds, char **split)
+// char	**no_name(char *s, int wrd_no, int no_wrds, char **split)
+// {
+	
+// }
+
+char	**mini_split(char *s)
 {
+	char	**split;
+	int		no_wrds;
+	int		wrd_no;
 	int	len;
 	int	i;
 
 	i = 0;
-	while (++wrd_no < no_wrds)
+	no_wrds = no_of_words(s, 0, 0, 0) + 1;
+	split = malloc(sizeof(char *) * no_wrds + 1);
+	if (!split)
+		return (NULL);
+	wrd_no = -1;
+	while (++wrd_no <= no_wrds)
 	{
 		while (s[i] && s[i] == ' ')
 			i++;
@@ -140,18 +153,4 @@ char	**no_name(char *s, int wrd_no, int no_wrds, char **split)
 	}
 	split[wrd_no] = NULL;
 	return (split);
-}
-
-char	**mini_split(char *s)
-{
-	char	**split;
-	int		no_wrds;
-	int		wrd_no;
-
-	no_wrds = no_of_words(s, 0, 0, 0) + 1;
-	split = malloc(sizeof(char *) * no_wrds);
-	if (!split)
-		return (NULL);
-	wrd_no = -1;
-	return (no_name(s, wrd_no, no_wrds, split));
 }
