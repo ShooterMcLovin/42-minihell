@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:37:50 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 19:47:02 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:31:18 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ int						ft_echo(t_token *token);
 int						ft_pwd(t_token *token);
 int						ft_env(t_token *token);
 void					set_env(t_mini *mini, char **env);
-int						ft_cd(t_mini *mini, t_token *token);
+int						ft_cd(t_token *token);
 int						update_env_part(t_mini *mini, char *part, char *_new);
 char					*get_env_part(t_mini *mini, char *part);
 int						ft_unset(t_token *token);
-int						ft_export(t_mini *mini, char **var);
+int						ft_export(char **var);
 int						ft_export2(t_mini *mini, char **var);
 int						ft_builtins(t_token *token);
 int						is_builtin(t_token *token);
@@ -140,7 +140,7 @@ t_environ				*init_env_list(t_mini *mini, int env_item);
 t_environ				*init_item(char *to_split);
 void					ft_envadd_back(t_environ **env, t_environ *neo);
 void					print_env(t_environ *environ);
-void					do_export(t_mini *mini, t_export *_export, char **var);
+void					do_export(t_export *_export, char **var);
 int						ft_set_env(t_mini *mini, char **env);
 int						export_no_input(t_mini *mini);
 int						check_export(char **var);

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:06:25 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 08:09:06 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:02:54 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	ft_env(t_token *token)
 {
-	print_env(token->mini->env_test);
+	t_mini *mini;
+	(void)token;
+	mini = get_data();
+	print_env(mini->env_test);
 	return (1);
 }
 

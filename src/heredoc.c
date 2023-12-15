@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 21:36:18 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 21:39:13 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:26:37 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 char	**build_heredoc_cmd2(t_token *token)
 {
 	char	**cmd;
+	int i = 0;
+	int cmd_no;
 
-	cmd = malloc(sizeof(char *) * 3);
-	cmd[0] = (token->cmd[0]);
-	if (!ft_strncmp(cmd[0], "ls", 3))
-		cmd[1] = NULL;
-	else
-	{
-		cmd[1] = (".temp");
-		cmd[2] = NULL;
-	}
+	cmd_no = 0;
+	cmd = malloc(sizeof(char *) * 15);
+	if (!ft_strncmp(token->cmd[i], "ls", 3))
+		cmd_no++;
+	while (token->cmd[cmd_no])
+		cmd[i++] = (token->cmd[cmd_no++]);
+	cmd[i] = (".temp");
+	cmd[i + 1] = NULL;
 	return (cmd);
 }
 
@@ -42,6 +43,7 @@ int	do_heredoc(t_token *token)
 	if ((execve(path, here_doc_cmd, env) < 0))
 	{
 		free(here_doc_cmd);
+		close(token->fd_hd);
 		command_not_found(token->cmd[0]);
 		close(token->fd_hd);
 		path = NULL;

@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 14:09:24 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/13 20:39:40 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:20:23 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	exec_and_stuff(t_token *token)
 
 	if (!pid)
 	{
+		head->child_pid = pid;
 		if (head->type == REDIR_OUT)
 			redir2(head);
 		else if (token->type == REDIR_IN)
@@ -56,7 +57,6 @@ void	exec_and_stuff(t_token *token)
 	}
 	else
 	{
-		head->child_pid = pid;
 		wait_pids(mini->tokens);
 	}
 	

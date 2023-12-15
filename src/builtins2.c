@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:22:48 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/13 19:46:02 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:34:19 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,20 @@ t_environ	*new_env2(char *var)
 	return (new_env);
 }
 
-int	ft_export(t_mini *mini, char **var)
+int	ft_export(char **var)
 {
 	t_export	*export;
+	t_mini *mini;
 
+	mini = get_data();
 	if (!var || !var[0] || !var[0][0])
 		return (export_no_input(mini));
 	if (!check_export(var) || !has_equal_sign(var))
 		return (0);
 	export = init_export(mini, var);
-	do_export(mini, export, var);
+	do_export(export, var);
 	free_export(export);
+	// exit(0);
 	return (0);
 }
 

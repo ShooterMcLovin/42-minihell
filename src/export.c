@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siroulea <siroulea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 08:01:37 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 12:06:42 by siroulea         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:31:13 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,14 @@ int	export_no_input(t_mini *mini)
 	return (0);
 }
 
-void	do_export(t_mini *mini, t_export *export, char **var)
+void	do_export(t_export *export, char **var)
 {
 	int			x;
 	char		*temp;
 	t_environ	*head_new;
+	t_mini *mini;
 
+	mini = get_data();
 	x = 0;
 	while (export != NULL)
 	{

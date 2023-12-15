@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 21:17:07 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:02:20 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,41 +104,28 @@ int	main(int ac, char **av, char **env)
 	return (g_errno);
 }
 
+/*Errors
+builtins
+besoin de exit ++
 
-// cat -e  << a
-// ne fait pas le "-e"
+exit 6 
+senser donne le 6 quand tu fait echo $?
+donne pas 0 si la commande a fonctionnner tjrs 127
 
-// export a=1 b=2
+signaux heredoc
+*/
 
-// unset a c
-// devrai unset les deux
-
-// export b=2
-// si je re export une deusieme fois ca fontionne pas devrais etre la nouvelle valeur
-
-// exit 6 
-// senser donne le 6 quand tu fait echo $?
-
-// donne pas 0 si la commande a fonctionnner tjrs 127
-
-// signaux heredoc
-
-/*LEAKS*/
-//encore des leaks dans export
-//definitely lost: 41 bytes in 2 blocks
-//indirectly lost: 15 bytes in 2 blocks
-
-//leaks dans unset aussi
-// 2 block de plus dans indirectly
-
-
-//echo $PATH
-// 2 leaks
-
-// exit 1 1 1 1 leaks on peu le bloquer
-// si il y as plus que 1 chiffre"arguments" ca leaks sinon non
-
-
+/*LEAKS
+encore des leaks dans export
+	definitely lost: 41 bytes in 2 blocks
+	indirectly lost: 15 bytes in 2 blocks
+leaks dans unset aussi
+	2 block de plus dans indirectly
+echo $PATH
+	2 leaks
+exit 1 1 1 1 leaks on peu le bloquer
+	si il y as plus que 1 chiffre"arguments" ca leaks sinon non
+*/
 
 
 

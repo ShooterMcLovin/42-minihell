@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/13 20:37:38 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:32:18 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,42 @@ int	ft_echo(t_token *token)
 
 int	ft_unset(t_token *token)
 {
-	char		*part;
+	t_mini * mini;
+	char		**part;
+	int			unset_no;
+	int			cmd_no;
 	int			len;
 	t_environ	*head;
 
+	unset_no = 0;
+	cmd_no = 0;
+	mini = get_data();
 	if (!token->cmd[1] || !token->cmd[1][0])
 		return (0);
-	part = (token->cmd[1]);
-	len = ft_strlen(part);
-	head = token->mini->env_test;
-	while (token->mini->env_test->next && ft_strncmp(part,
-			token->mini->env_test->next->env_var, len) != 0)
-		token->mini->env_test = token->mini->env_test->next;
-	if (token->mini->env_test->next != NULL)
+	part = malloc(token_size(token));
+	head = mini->env_test;
+	while (token->cmd[++cmd_no])
 	{
-		free(token->mini->env_test->next->env_var);
-		token->mini->env_test->next = token->mini->env_test->next->next;
+		part[unset_no] = (token->cmd[cmd_no]);
+		len = ft_strlen(part[unset_no]);
+		while (mini->env_test->next && ft_strncmp(part[unset_no],
+				mini->env_test->next->env_var, len) != 0)
+			mini->env_test = mini->env_test->next;
+		if (mini->env_test->next != NULL)
+		{
+			free(mini->env_test->next->env_var);
+			mini->env_test->next = mini->env_test->next->next;
+		}
+		mini->env_len--;
+		unset_no++;
 	}
-	token->mini->env_test = head;
-	token->mini->env_len--;
+	// releaser(part);
+	mini->env_test = head;
 	return (0);
 }
 
 int	ft_builtins(t_token *token)
 {
-	t_mini	*mini;
-
-	mini = get_data();
 	if (!ft_strncmp(token->cmd[0], "PWD", 3))
 		ft_pwd(token);
 	if (!ft_strncmp(token->cmd[0], "pwd", 3))
@@ -100,16 +109,16 @@ int	ft_builtins(t_token *token)
 	if (!ft_strncmp(token->cmd[0], "echo", 3))
 		ft_echo(token);
 	else if (!ft_strncmp(token->cmd[0], "cd", 2))
-		ft_cd(mini, token);
+		ft_cd(token);
 	else if (!ft_strncmp(token->cmd[0], "unset", 5))
 		ft_unset(token);
 	else if (!ft_strncmp(token->cmd[0], "export", 6) && !token->cmd[1])
-		ft_export(mini, NULL);
+		ft_export(NULL);
 	else if (!ft_strncmp(token->cmd[0], "export", 6))
-		ft_export(mini, &token->cmd[1]);
+		ft_export(&token->cmd[1]);
 	else if (!ft_strncmp(token->cmd[0], "env", 3))
 		ft_env(token);
-	else
-	 	return 0;
-	return 1;
+	// exit(0); //empeche export si unmute
+	waitpid(token->child_pid,0,0);
+	return (1);
 }

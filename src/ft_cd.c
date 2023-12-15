@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:06:43 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/03 08:38:51 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:28:36 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	display_error(char *cmd)
 	set_err_code(1);
 }
 
-int	ft_cd(t_mini *mini, t_token *token)
+int	ft_cd(t_token *token)
 {
 	int		x;
 	char	dir[100];
+	t_mini *mini;
 
+	mini = get_data();
 	x = 1;
 	getcwd(dir, 100);
 	if (!token->cmd[1] || !token->cmd[1][0])
