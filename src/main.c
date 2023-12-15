@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 07:01:40 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/14 19:02:20 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/15 12:20:02 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,6 @@ int	main(int ac, char **av, char **env)
 }
 
 /*Errors
-builtins
-besoin de exit ++
-
 exit 6 
 senser donne le 6 quand tu fait echo $?
 donne pas 0 si la commande a fonctionnner tjrs 127

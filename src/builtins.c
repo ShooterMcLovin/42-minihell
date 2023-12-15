@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 08:34:53 by alpicard          #+#    #+#             */
-/*   Updated: 2023/12/14 19:32:18 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/15 12:18:50 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,10 @@ int	ft_builtins(t_token *token)
 		ft_pwd(token);
 	if (!ft_strncmp(token->cmd[0], "echo", 3))
 		ft_echo(token);
-	else if (!ft_strncmp(token->cmd[0], "cd", 2))
-		ft_cd(token);
-	else if (!ft_strncmp(token->cmd[0], "unset", 5))
-		ft_unset(token);
-	else if (!ft_strncmp(token->cmd[0], "export", 6) && !token->cmd[1])
-		ft_export(NULL);
-	else if (!ft_strncmp(token->cmd[0], "export", 6))
-		ft_export(&token->cmd[1]);
+
 	else if (!ft_strncmp(token->cmd[0], "env", 3))
 		ft_env(token);
-	// exit(0); //empeche export si unmute
-	waitpid(token->child_pid,0,0);
+	exit(0); //empeche export si unmute
+	// waitpid(token->child_pid,0,0);
 	return (1);
 }

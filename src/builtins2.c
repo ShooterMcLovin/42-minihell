@@ -6,7 +6,7 @@
 /*   By: alpicard <alpicard@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:22:48 by siroulea          #+#    #+#             */
-/*   Updated: 2023/12/14 19:34:19 by alpicard         ###   ########.fr       */
+/*   Updated: 2023/12/15 12:17:56 by alpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,13 @@ int	is_builtin(t_token *token)
 	else if (!ft_strncmp(token->cmd[0], "PWD", 3))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "cd", 2))
-		return (1);
+		return (0);
 	else if (!ft_strncmp(token->cmd[0], "unset", 5))
-		return (1);
+		return (0);
 	else if (!ft_strncmp(token->cmd[0], "export", 6) && !token->cmd[1])
-		return (1);
+		return (0);
 	else if (!ft_strncmp(token->cmd[0], "export", 6))
-		return (1);
+		return (0);
 	else if (!ft_strncmp(token->cmd[0], "env", 3))
 		return (1);
 	else if (!ft_strncmp(token->cmd[0], "echo", 5))
